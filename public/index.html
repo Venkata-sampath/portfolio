@@ -6,10 +6,116 @@
     <link rel="stylesheet" href="./style.css">
     <title>Document</title>
 </head>
-<body class="bg-black">
-    <div class="bg-violet-500 p-6 m-10 border-2 rounded-full border-violet-900  ">
-        <h1 class="text-center text-red-600">Hello World</h1>
-    </div>
+<body class="bg-black flex justify-center">
+    <!-- container for the entire site -->
+    <div class="w-[1300px]">
+        <!-- header section  -->
+        <header class="flex flex-col justify-center items-center bg-violet-300 h-screen w-full">
+            <!-- hero section -->
+            <div class="bg-violet-600 text-center">
+                <p class="text-2xl sm:text-4xl">Hello &#128075;, I'am</p>
+                <h1 class="text-3xl sm:text-6xl my-4">Venkata Sampath Guthina</h1>
+                <p class="text-lg my-8">Web Developer</p>
+                <div class="flex flex-row gap-4 justify-center">
+                    <div class="bg-violet-950 text-center rounded-full p-3"><a href="#">Download Resume</a></div>
+                    <div class="border-2 border-violet-950 text-center rounded-full p-3"><a href="#">Contact</a></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- nav bar (tabbed navigation)-->
+        <nav class="bg-white w-full flex justify-center h-auto">
+            <ul class="flex font-semibold bg-gray-500 rounded-full">
+                <li class="mx-[10px] cursor-pointer p-3 rounded-full bg-white">About</li>
+                <li class="mx-[10px] cursor-pointer p-3">Projects</li>
+                <li class="mx-[10px] cursor-pointer p-3">Contact</li>
+            </ul>
+        </nav>
+
+        <!-- about section -->
+        <div class="flex flex-col justify-center items-center gap-4 bg-violet-300 h-auto w-full p-8">
+            <!-- about me -->
+            <div class="flex flex-col justify-center items-center bg-violet-600 h-auto w-full">
+                <h2 class="text-2xl sm:text-4xl my-4">About Me</h2>
+                <div class="flex gap-4 flex-wrap-reverse md:flex-nowrap justify-center">
+                    <div class="flex flex-col gap-4">
+                        <h3 class="text-xl sm:text-3xl">Hi, I'am Venkata Sampath</h3>
+                        <p class="text-wrap text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus repudiandae similique, iure excepturi cumque voluptate? Inventore expedita iusto quos necessitatibus. Labore a corporis animi quisquam, soluta deserunt at necessitatibus voluptates dolorum eum consequatur voluptate fuga quia eveniet pariatur nobis dolores suscipit sit id facere quos. Quia eligendi eveniet tempora porro.</p>
+                        <p class="text-wrap text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus repudiandae similique, iure excepturi cumque voluptate? Inventore expedita iusto quos necessitatibus. Labore a corporis animi quisquam, soluta deserunt at necessitatibus voluptates dolorum eum consequatur voluptate fuga quia eveniet pariatur nobis dolores suscipit sit id facere quos. Quia eligendi eveniet tempora porro.</p>
+                        <p class="text-wrap text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus repudiandae similique, iure excepturi cumque voluptate? Inventore expedita iusto quos necessitatibus. Labore a corporis animi quisquam, soluta deserunt at necessitatibus voluptates dolorum eum consequatur voluptate fuga quia eveniet pariatur nobis dolores suscipit sit id facere quos. Quia eligendi eveniet tempora porro.</p>
+                    </div>
+                    <img  class="w-80 h-80" src="https://i.ibb.co/vCbmGsF0/icon-7797704-640.png" alt="profile photo">
+                </div>
+            </div>
     
+            <!-- skills -->
+            <div class="flex flex-col bg-violet-600 h-auto w-full">
+                <h2 class="text-2xl sm:text-4xl my-6 text-center">Skills</h2>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <div class="bg-violet-800 p-4 ">
+                        <h3 class="text-xl sm:text-2xl mb-4 text-center">Languages</h3>
+                        <ul class="flex flex-wrap gap-3">
+                            <li class="bg-gray-500 rounded-full h-auto p-2">Java</li>
+                            <li class="bg-gray-500 rounded-full h-auto p-2">Javascript</li>
+                            <li class="bg-gray-500 rounded-full h-auto p-2">HTML</li>
+                            <li class="bg-gray-500 rounded-full h-auto p-2">CSS</li>
+                            <li class="bg-gray-500 rounded-full h-auto p-2">SQL</li>
+                        </ul>
+                    </div>
+                    <div class="bg-violet-800 p-4">
+                        <h3 class="text-xl sm:text-2xl mb-4 text-center">Development</h3>
+                        <ul class="flex flex-wrap gap-3">
+                            <li class="bg-gray-500 rounded-full h-auto p-2">Node.js</li>
+                            <li class="bg-gray-500 rounded-full h-auto p-2">Express</li>
+                        </ul>
+                    </div>
+                    <div class="bg-violet-800 p-4">
+                        <h3 class="text-xl sm:text-2xl mb-4 text-center">Tools & Platforms</h3>
+                        <ul class="flex flex-wrap gap-3">
+                            <li class="bg-gray-500 rounded-full h-auto p-2">VS Code</li>
+                            <li class="bg-gray-500 rounded-full h-auto p-2">Postman</li>
+                            <li class="bg-gray-500 rounded-full h-auto p-2">AWS</li>
+                            <li class="bg-gray-500 rounded-full h-auto p-2">Git</li>
+                            <li class="bg-gray-500 rounded-full h-auto p-2">Git Hub</li>
+                        </ul>
+                    </div>
+                    <div class="bg-violet-800 p-4">
+                        <h3 class="text-xl sm:text-2xl mb-4 text-center">Databases</h3>
+                        <ul class="flex flex-wrap gap-3">
+                            <li class="bg-gray-500 rounded-full h-auto p-2">MongoDB</li>
+                            <li class="bg-gray-500 rounded-full h-auto p-2">MySQL</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- education -->
+            <div class="flex flex-col bg-violet-600 h-auto w-full">
+                <h2 class="text-2xl sm:text-4xl my-6 text-center">Education</h2>
+                <div class="flex flex-col gap-6">
+                    <div class="bg-violet-800">
+                        <h3 class="text-xl sm:text-2xl mb-4">MLR Institute of Technology</h3>
+                        <p class="text-lg mb-2">Bachelor of Technology - Computer Science and Engineering (7th Semester)</p>
+                        <p class="text-lg mb-4">Hyderabad, Telangana | Expected May 2026</p>
+                        <p class="text-lg">CGPA: 8.76 (current)</p>
+                    </div>
+                    <div class="bg-violet-800">
+                        <h3 class="text-xl sm:text-2xl mb-4">Sri Chaitanya Junior Kalasala</h3>
+                        <p class="text-lg mb-2">Telangana State Board of Intermediate Education</p>
+                        <p class="text-lg mb-4">Hyderabad, Telangana | Jun 2020 - Aug 2022</p>
+                        <p class="text-lg">Percentage: 97.3%</p>
+                    </div>
+                    <div class="bg-violet-800">
+                        <h3 class="text-xl sm:text-2xl mb-4">Gowtham Model School</h3>
+                        <p class="text-lg mb-2">SSC</p>
+                        <p class="text-lg mb-4">Hyderabad, Telangana | Jun 2015 - May 2020</p>
+                        <p class="text-lg">CGPA: 10</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>   
 </body>
 </html>
