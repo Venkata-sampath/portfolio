@@ -3,263 +3,531 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-primary': '#030712', // Near Black (Slate-950)
+                        'dark-secondary': '#111827', // Deep Dark Blue/Gray (Gray-900)
+                        'accent-blue': '#3B82F6', // Vibrant Blue (Blue-500)
+                        'accent-hover': '#2563EB', // Darker Blue for hover (Blue-600)
+                        'text-light': '#F9FAFB', // Stark White (Gray-50)
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        // Custom keyframe for subtle blob movement
+                        blobMovement: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                    },
+                    animation: {
+                        fadeInUp: 'fadeInUp 0.8s ease-out forwards',
+                        blobSlow: 'blobMovement 15s ease-in-out infinite alternate', // Slow, repeating movement
+                    },
+                    // Ensure backdrop blur utility is available
+                    backdropBlur: {
+                        xs: '2px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        #hero {
+            position: relative;
+            overflow: hidden;
+            /* Base background color */
+            background-color: var(--tw-colors-dark-primary); 
+        }
+
+        /* Noise texture overlay for a subtle grain effect */
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.05;
+            /* Small, repeating transparent image pattern for noise */
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVRYdEVFUk1BSS81/r21x/9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f9z5f+dJ95rAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAGUlEQVR4nO3BMQEAAADCoPVPbQwfoAAAAD8AAZ39D6xZp7vIAAAAAElFTkSuQmCC');
+        }
+
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .timeline-item-left .card-content {
+            margin-right: 50%;
+        }
+        .timeline-item-right .card-content {
+            margin-left: 50%;
+        }
+        @media (max-width: 767px) {
+            .timeline-item-left .card-content,
+            .timeline-item-right .card-content {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+        .map-responsive-container {
+            position: relative;
+            padding-bottom: 75%; /* 4:3 Aspect Ratio (75% height of width) for mobile/small screens */
+            height: 0;
+        }
+
+        /* Use a wider 16:9 aspect ratio on medium screens and up */
+        @media (min-width: 768px) {
+            .map-responsive-container {
+                padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            }
+        }
+
+        .map-responsive-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            filter: grayscale(10%); /* Subtle desaturation for map */
+        }
+    </style>
     <script src="https://kit.fontawesome.com/de81ed7250.js" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title>Venkata Sampath - Web Developer Portfolio</title>
 </head>
-<body class="bg-black flex justify-center">
-    <!-- container for the entire site -->
-    <div class="w-[1300px]">
-        <!-- header section  -->
-        <header class="flex flex-col justify-center items-center bg-violet-300 h-screen w-full">
-            <!-- hero section -->
-            <div class="bg-violet-600 text-center">
-                <p class="text-2xl sm:text-4xl">Hello &#128075;, I'am</p>
-                <h1 class="text-3xl sm:text-6xl my-4">Venkata Sampath Guthina</h1>
-                <p class="text-lg my-8">Web Developer</p>
-                <div class="flex flex-row gap-4 justify-center">
-                    <div class="bg-violet-800 text-center rounded-full p-3"><a href="#">Download Resume</a></div>
-                    <div class="border-2 border-violet-800 text-center rounded-full p-3"><a href="#">Contact</a></div>
+
+<body class="bg-dark-primary text-text-light font-sans antialiased">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav id="navbar" class="bg-dark-primary/90 backdrop-blur-sm w-full z-50 fixed inset-x-0 top-0 transition-all duration-300 ease-in-out border-b border-transparent">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+                <a href="#hero" class="text-xl font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-text-light to-accent-blue transition-all duration-300 hover:scale-105">
+                    Venkata Sampath
+                </a>
+                
+                <ul id="desktop-links" class="hidden md:flex font-medium space-x-2">
+                    <li><a href="#about" class="px-3 py-2 rounded-lg active:bg-accent-blue hover:bg-dark-secondary transition-colors duration-200">About Me</a></li>
+                    <li><a href="#skills" class="px-3 py-2 rounded-lg active:bg-accent-blue hover:bg-dark-secondary transition-colors duration-200">Skills</a></li>
+                    <li><a href="#education" class="px-3 py-2 rounded-lg active:bg-accent-blue hover:bg-dark-secondary transition-colors duration-200">Education</a></li>
+                    <li><a href="#projects" class="px-3 py-2 rounded-lg active:bg-accent-blue hover:bg-dark-secondary transition-colors duration-200">Projects</a></li>
+                    <li><a href="#contact" class="px-3 py-2 rounded-lg active:bg-accent-blue hover:bg-dark-secondary transition-colors duration-200">Contact</a></li>
+                </ul>
+
+                <button id="menu-toggle" class="text-text-light md:hidden focus:outline-none z-50 p-2 rounded-full hover:bg-dark-secondary transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path id="hamburger-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="mobile-menu" class=" hidden
+                fixed top-16 left-4 w-64 max-h-96 bg-dark-secondary shadow-xl rounded-lg z-40 
+                md:hidden flex-col items-center justify-start overflow-y-auto">
+                
+                <ul class="flex flex-col bg-dark-secondary space-y-2 text-lg font-medium text-text-light p-4 w-full">
+                    <li><a href="#about" class="block p-3 rounded-lg hover:bg-dark-primary transition-colors">About Me</a></li>
+                    <li><a href="#skills" class="block p-3 rounded-lg hover:bg-dark-primary transition-colors">Skills</a></li>
+                    <li><a href="#education" class="block p-3 rounded-lg hover:bg-dark-primary transition-colors">Education</a></li>
+                    <li><a href="#projects" class="block p-3 rounded-lg hover:bg-dark-primary transition-colors">Projects</a></li>
+                    <li><a href="#contact" class="block p-3 rounded-lg hover:bg-dark-primary transition-colors">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <header id="hero" class="pt-20 pb-16 min-h-screen flex flex-col justify-center items-center text-center relative z-10">
+            
+            <div class="absolute inset-0 z-0 opacity-20 md:opacity-30">
+                <div class="absolute w-72 h-72 md:w-96 md:h-96 rounded-full bg-accent-blue/50 blur-3xl md:blur-[100px] left-[-20%] top-[70%] transform translate-x-1/2 -translate-y-1/2 animate-blobSlow" style="animation-delay: 0s;"></div>
+
+                <div class="absolute w-64 h-64 md:w-80 md:h-80 rounded-full bg-indigo-500/40 blur-3xl md:blur-[100px] right-[-10%] top-[10%] transform -translate-x-1/2 translate-y-1/2 animate-blobSlow" style="animation-delay: -5s;"></div>
+                
+                <div class="absolute w-52 h-52 md:w-64 md:h-64 rounded-full bg-cyan-400/30 blur-3xl md:blur-[100px] left-[50%] top-[40%] transform -translate-x-1/2 -translate-y-1/2 animate-blobSlow" style="animation-delay: -10s;"></div>
+            </div>
+            <div class="space-y-6 lg:space-y-8 p-4 relative z-10">
+                <p class="text-xl sm:text-2xl text-accent-blue font-semibold animate-fadeInUp" style="animation-delay: 0s;">Hello 👋, I'm</p>
+                <h1 class="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight animate-fadeInUp" style="animation-delay: 0.2s;">
+                    Venkata Sampath <span class="text-accent-blue">Guthina</span>
+                </h1>
+                <p class="text-2xl sm:text-3xl font-light text-text-light/80 animate-fadeInUp" style="animation-delay: 0.4s;">
+                    Web Developer | Full Stack Enthusiast
+                </p>
+                
+                <div class="flex flex-row gap-6 justify-center pt-4 animate-fadeInUp" style="animation-delay: 0.6s;">
+                    <a href="#projects" class="px-8 py-3 bg-accent-blue text-dark-primary font-bold rounded-full shadow-lg transition-all duration-300 hover:bg-accent-hover hover:shadow-2xl hover:shadow-accent-blue/40 transform hover:scale-[1.03]">
+                        View Projects
+                    </a>
+                    <a href="#contact" class="px-8 py-3 border-2 border-accent-blue text-accent-blue font-semibold rounded-full transition-all duration-300 hover:bg-accent-blue/10 transform hover:scale-[1.03]">
+                        Contact Me
+                    </a>
                 </div>
             </div>
         </header>
 
-        <!-- nav bar (tabbed navigation)-->
-        <nav class="bg-white w-full flex justify-center h-auto">
-            <ul class="flex font-semibold bg-gray-500 rounded-full">
-                <li class="mx-[10px] cursor-pointer p-3 rounded-full bg-white">About</li>
-                <li class="mx-[10px] cursor-pointer p-3">Projects</li>
-                <li class="mx-[10px] cursor-pointer p-3">Contact</li>
-            </ul>
-        </nav>
-
-        <!-- about section -->
-        <div class="flex flex-col justify-center items-center gap-4 bg-violet-300 h-auto w-full p-8">
-            <!-- about me -->
-            <div class="flex flex-col justify-center items-center bg-violet-600 h-auto w-full">
-                <h2 class="text-2xl sm:text-4xl my-4">About Me</h2>
-                <div class="flex gap-4 flex-wrap-reverse md:flex-nowrap justify-center">
-                    <div class="flex flex-col gap-4">
-                        <h3 class="text-xl sm:text-3xl">Hi, I'am Venkata Sampath</h3>
-                        <p class="text-wrap text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus repudiandae similique, iure excepturi cumque voluptate? Inventore expedita iusto quos necessitatibus. Labore a corporis animi quisquam, soluta deserunt at necessitatibus voluptates dolorum eum consequatur voluptate fuga quia eveniet pariatur nobis dolores suscipit sit id facere quos. Quia eligendi eveniet tempora porro.</p>
-                        <p class="text-wrap text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus repudiandae similique, iure excepturi cumque voluptate? Inventore expedita iusto quos necessitatibus. Labore a corporis animi quisquam, soluta deserunt at necessitatibus voluptates dolorum eum consequatur voluptate fuga quia eveniet pariatur nobis dolores suscipit sit id facere quos. Quia eligendi eveniet tempora porro.</p>
-                        <p class="text-wrap text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus repudiandae similique, iure excepturi cumque voluptate? Inventore expedita iusto quos necessitatibus. Labore a corporis animi quisquam, soluta deserunt at necessitatibus voluptates dolorum eum consequatur voluptate fuga quia eveniet pariatur nobis dolores suscipit sit id facere quos. Quia eligendi eveniet tempora porro.</p>
-                    </div>
-                    <img  class="w-80 h-80" src="https://i.ibb.co/vCbmGsF0/icon-7797704-640.png" alt="profile photo">
+        <hr class="border-t border-dark-secondary my-8">
+        <section id="about" class="py-16 scroll-reveal">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-text-light">
+                About <span class="text-accent-blue">Me</span>
+            </h2>
+            
+            <div class="flex flex-col md:flex-row gap-10 justify-center items-start bg-dark-secondary p-8 rounded-xl shadow-2xl transition-all duration-300 hover:shadow-accent-blue/20">
+                <div class="flex-shrink-0 w-full md:w-80 h-80 overflow-hidden rounded-full border-4 border-accent-blue shadow-xl mx-auto md:mx-0">
+                    <img class="w-full h-full object-cover transform scale-105" src="https://i.ibb.co/vCbmGsF0/icon-7797704-640.png" alt="Stylized profile illustration of Venkata Sampath">
+                </div>
+                
+                <div class="flex flex-col gap-6 pt-4 md:pt-0">
+                    <h3 class="text-3xl font-bold text-accent-blue">Hi, I'm Venkata Sampath</h3>
+                    <p class="text-lg leading-relaxed text-text-light/80">
+                        I am a passionate **Full Stack Enthusiast** specializing in modern web development. My focus is on building robust and scalable applications using the **MERN stack (Node.js, Express, MongoDB)**. I strive to create efficient backend systems, as demonstrated in projects like **TaskVault** and **SlotSwapper**.
+                    </p>
+                    <p class="text-lg leading-relaxed text-text-light/80">
+                        I am currently pursuing my Bachelor of Technology in Computer Science and Engineering, constantly expanding my knowledge in algorithms, databases, and cloud platforms like **AWS**. I am highly focused on writing clean, well-documented code and delivering solutions that blend functionality with a great user experience.
+                    </p>
+                    <p class="text-lg leading-relaxed text-text-light/80">
+                        I am actively seeking opportunities to contribute to challenging projects. Let's build something great together!
+                    </p>
+                    <a href="#contact" class="w-fit px-6 py-2 bg-accent-blue text-dark-primary font-bold rounded-full hover:bg-accent-hover transition-colors duration-300 mt-4">
+                        Let's Connect
+                    </a>
                 </div>
             </div>
-    
-            <!-- skills -->
-            <div class="flex flex-col bg-violet-600 h-auto w-full">
-                <h2 class="text-2xl sm:text-4xl my-6 text-center">Skills</h2>
-                <div class="flex flex-wrap justify-center gap-6">
-                    <div class="bg-violet-800 p-4 ">
-                        <h3 class="text-xl sm:text-2xl mb-4 text-center">Languages</h3>
-                        <ul class="flex flex-wrap gap-3">
-                            <li class="bg-gray-500 rounded-full h-auto p-2">Java</li>
-                            <li class="bg-gray-500 rounded-full h-auto p-2">Javascript</li>
-                            <li class="bg-gray-500 rounded-full h-auto p-2">HTML</li>
-                            <li class="bg-gray-500 rounded-full h-auto p-2">CSS</li>
-                            <li class="bg-gray-500 rounded-full h-auto p-2">SQL</li>
-                        </ul>
-                    </div>
-                    <div class="bg-violet-800 p-4">
-                        <h3 class="text-xl sm:text-2xl mb-4 text-center">Development</h3>
-                        <ul class="flex flex-wrap gap-3">
-                            <li class="bg-gray-500 rounded-full h-auto p-2">Node.js</li>
-                            <li class="bg-gray-500 rounded-full h-auto p-2">Express</li>
-                        </ul>
-                    </div>
-                    <div class="bg-violet-800 p-4">
-                        <h3 class="text-xl sm:text-2xl mb-4 text-center">Tools & Platforms</h3>
-                        <ul class="flex flex-wrap gap-3">
-                            <li class="bg-gray-500 rounded-full h-auto p-2">VS Code</li>
-                            <li class="bg-gray-500 rounded-full h-auto p-2">Postman</li>
-                            <li class="bg-gray-500 rounded-full h-auto p-2">AWS</li>
-                            <li class="bg-gray-500 rounded-full h-auto p-2">Git</li>
-                            <li class="bg-gray-500 rounded-full h-auto p-2">Git Hub</li>
-                        </ul>
-                    </div>
-                    <div class="bg-violet-800 p-4">
-                        <h3 class="text-xl sm:text-2xl mb-4 text-center">Databases</h3>
-                        <ul class="flex flex-wrap gap-3">
-                            <li class="bg-gray-500 rounded-full h-auto p-2">MongoDB</li>
-                            <li class="bg-gray-500 rounded-full h-auto p-2">MySQL</li>
-                        </ul>
-                    </div>
+        </section>
+
+        <hr class="border-t border-dark-secondary my-8">
+        <section id="skills" class="py-16 scroll-reveal">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-text-light">
+                My <span class="text-accent-blue">Skills</span> & Tools
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="flex flex-col bg-dark-secondary p-6 rounded-xl shadow-lg border-t-4 border-cyan-500 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
+                    <h3 class="text-2xl font-bold mb-4 text-center text-cyan-500">Languages</h3>
+                    <ul class="flex flex-wrap justify-center gap-3">
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">Java</li>
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">Javascript</li>
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">HTML</li>
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">CSS</li>
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">SQL</li>
+                    </ul>
+                </div>
+
+                <div class="flex flex-col bg-dark-secondary p-6 rounded-xl shadow-lg border-t-4 border-green-500 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
+                    <h3 class="text-2xl font-bold mb-4 text-center text-green-500">Development</h3>
+                    <ul class="flex flex-wrap justify-center gap-3">
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">Node.js</li>
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">Express</li>
+                    </ul>
+                </div>
+                
+                <div class="flex flex-col bg-dark-secondary p-6 rounded-xl shadow-lg border-t-4 border-purple-500 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
+                    <h3 class="text-2xl font-bold mb-4 text-center text-purple-500">Tools & Platforms</h3>
+                    <ul class="flex flex-wrap justify-center gap-3">
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">VS Code</li>
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">Postman</li>
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">AWS</li>
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">Git</li>
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">Git Hub</li>
+                    </ul>
+                </div>
+                
+                <div class="flex flex-col bg-dark-secondary p-6 rounded-xl shadow-lg border-t-4 border-yellow-400 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
+                    <h3 class="text-2xl font-bold mb-4 text-center text-yellow-400">Databases</h3>
+                    <ul class="flex flex-wrap justify-center gap-3">
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">MongoDB</li>
+                        <li class="bg-dark-primary/70 text-text-light rounded-full px-4 py-2 text-sm hover:bg-accent-blue/20 transition-colors duration-200 hover:text-accent-blue">MySQL</li>
+                    </ul>
                 </div>
             </div>
+        </section>
 
-            <!-- education -->
-            <div class="flex flex-col bg-violet-600 h-auto w-full">
-                <h2 class="text-2xl sm:text-4xl my-6 text-center">Education</h2>
-                <div class="flex flex-col gap-6">
-                    <div class="bg-violet-800">
-                        <h3 class="text-xl sm:text-2xl mb-4">MLR Institute of Technology</h3>
-                        <p class="text-lg mb-2">Bachelor of Technology - Computer Science and Engineering (7th Semester)</p>
-                        <p class="text-lg mb-4">Hyderabad, Telangana | Expected May 2026</p>
-                        <p class="text-lg">CGPA: 8.76 (current)</p>
+        <hr class="border-t border-dark-secondary my-8">
+        <section id="education" class="py-16 scroll-reveal">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-text-light">
+                My <span class="text-accent-blue">Education</span>
+            </h2>
+            
+            <div class="relative max-w-4xl mx-auto space-y-8">
+                <div class="absolute left-3 md:left-1/2 w-0.5 bg-dark-secondary h-full -translate-x-1/2 hidden md:block"></div>
+
+                <div class="relative flex flex-col md:flex-row justify-between bg-dark-secondary p-6 rounded-xl shadow-lg border-l-4 border-accent-blue md:border-l-0 md:border-r-4 md:text-right md:pr-12 transition-all duration-300 hover:shadow-2xl hover:border-accent-hover timeline-item-left">
+                    <span class="absolute w-3 h-3 bg-accent-blue rounded-full -left-1.5 top-8 md:top-auto md:-right-1.5 md:left-auto transition-colors"></span>
+                    <div class="md:w-1/2 card-content">
+                        <p class="text-sm font-light text-text-light/70">Expected May 2026</p>
+                        <p class="text-lg font-semibold text-text-light/90">Hyderabad, Telangana</p>
                     </div>
-                    <div class="bg-violet-800">
-                        <h3 class="text-xl sm:text-2xl mb-4">Sri Chaitanya Junior Kalasala</h3>
-                        <p class="text-lg mb-2">Telangana State Board of Intermediate Education</p>
-                        <p class="text-lg mb-4">Hyderabad, Telangana | Jun 2020 - Aug 2022</p>
-                        <p class="text-lg">Percentage: 97.3%</p>
-                    </div>
-                    <div class="bg-violet-800">
-                        <h3 class="text-xl sm:text-2xl mb-4">Gowtham Model School</h3>
-                        <p class="text-lg mb-2">SSC</p>
-                        <p class="text-lg mb-4">Hyderabad, Telangana | Jun 2015 - May 2020</p>
-                        <p class="text-lg">CGPA: 10</p>
+                    <div class="md:w-1/2 pt-2 md:pt-0">
+                        <h3 class="text-xl font-bold text-accent-blue">MLR Institute of Technology</h3>
+                        <p class="text-lg font-medium">B.Tech - Computer Science and Engineering</p>
+                        <p class="text-sm font-light text-text-light/70">CGPA: 8.76 (current)</p>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- projects section -->
-        <div class="flex flex-col justify-center items-center gap-4 bg-violet-300 h-auto w-full p-8">
-            <div class="flex flex-col justify-center items-center bg-violet-600 h-auto w-full">
-                <h2 class="text-2xl sm:text-4xl my-4">Projects</h2>
-                <div class="flex flex-wrap justify-center gap-6">
-                    <!-- project taskvault -->
-                    <div class="flex flex-col bg-violet-800 p-4 max-w-96">
-                        <h3 class="text-xl sm:text-2xl my-4">TaskVault</h3>
-                        <p class="text-base text-wrap">A backend project which implements RBAC(Role based access control) on task managed between users and admins</p>
-                        <ul class="flex flex-wrap gap-2 my-4">
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Nodejs</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Express</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">MongoDB</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">JWT</li>
-                        </ul>
-                        <ul class="flex flex-col gap-2 list-disc list-inside">
-                            <li>Secure Authentication System</li>
-                            <li>Password Hashing with bcrypt</li>
-                            <li>Role-Based Access Control(RBAC)</li>
-                        </ul>
-                        <div class="flex flex-row gap-2 my-4">
-                            <div class="rounded-full bg-gray-500 p-2 text-base text-center"><a href="">Github Repo</a></div>
-                            <div class="rounded-full border-2 border-gray-500 p-2 text-base text-center"><a href="">Live Demo</a></div>
-                        </div>
+                <div class="relative flex flex-col md:flex-row-reverse justify-between bg-dark-secondary p-6 rounded-xl shadow-lg border-l-4 border-text-light/50 md:border-r-0 md:border-l-4 md:pl-12 transition-all duration-300 hover:shadow-2xl hover:border-accent-hover timeline-item-right">
+                    <span class="absolute w-3 h-3 bg-text-light/50 rounded-full -left-1.5 top-8 md:top-auto md:-left-1.5 md:right-auto transition-colors"></span>
+                    <div class="md:w-1/2 pt-2 md:pt-0 md:text-left card-content">
+                        <p class="text-sm font-light text-text-light/70">Jun 2020 - Aug 2022</p>
+                        <p class="text-lg font-semibold text-text-light/90">Hyderabad, Telangana</p>
                     </div>
-
-                    <!-- project slotswapper -->
-                    <div class="flex flex-col bg-violet-800 p-4 max-w-96">
-                        <h3 class="text-xl sm:text-2xl my-4">SlotSwapper</h3>
-                        <p class="text-base text-wrap">SlotSwapper is a backend system for managing user event slots and enabling slot swapping between users</p>
-                        <ul class="flex flex-wrap gap-2 my-4">
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Nodejs</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Express</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">MongoDB</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">JWT</li>
-                        </ul>
-                        <ul class="flex flex-col gap-2 list-disc list-inside">
-                            <li>Secure Authentication System</li>
-                            <li>Password Hashing with bcrypt</li>
-                            <li>Slot Entity CRUD operations with Swap Feature</li>
-                        </ul>
-                        <div class="flex flex-row gap-2 my-4">
-                            <div class="rounded-full bg-gray-500 p-2 text-base text-center"><a href="">Github</a></div>
-                            <div class="rounded-full border-2 border-gray-500 p-2 text-base text-center"><a href="">Live Demo</a></div>
-                        </div>
+                    <div class="md:w-1/2 pt-2 md:pt-0">
+                        <h3 class="text-xl font-bold text-text-light/70">Sri Chaitanya Junior Kalasala</h3>
+                        <p class="text-lg font-medium">Intermediate Education (TSBIE)</p>
+                        <p class="text-sm font-light text-text-light/70">Percentage: 97.3%</p>
                     </div>
+                </div>
 
-                    <!-- project blog app -->
-                    <div class="flex flex-col bg-violet-800 p-4 max-w-96">
-                        <h3 class="text-xl sm:text-2xl my-4">Blog App</h3>
-                        <p class="text-base text-wrap">An Application to keep track of your personal blogs</p>
-                        <ul class="flex flex-wrap gap-2 my-4">
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Nodejs</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Express</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">CSS</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">EJS</li>
-                        </ul>
-                        <ul class="flex flex-col gap-2 list-disc list-inside">
-                            <li>Blog CRUD operations</li>
-                            <li>Integraed Rich Text editor</li>
-                        </ul>
-                        <div class="flex flex-row gap-2 my-4">
-                            <div class="rounded-full bg-gray-500 p-2 text-base text-center"><a href="">Github</a></div>
-                            <div class="rounded-full border-2 border-gray-500 p-2 text-base text-center"><a href="">Live Demo</a></div>
-                        </div>
+                <div class="relative flex flex-col md:flex-row justify-between bg-dark-secondary p-6 rounded-xl shadow-lg border-l-4 border-accent-blue md:border-l-0 md:border-r-4 md:text-right md:pr-12 transition-all duration-300 hover:shadow-2xl hover:border-accent-hover timeline-item-left">
+                    <span class="absolute w-3 h-3 bg-accent-blue rounded-full -left-1.5 top-8 md:top-auto md:-right-1.5 md:left-auto transition-colors"></span>
+                    <div class="md:w-1/2 card-content">
+                        <p class="text-sm font-light text-text-light/70">Jun 2015 - May 2020</p>
+                        <p class="text-lg font-semibold text-text-light/90">Hyderabad, Telangana</p>
                     </div>
-
-                    <!-- project ai judge -->
-                    <div class="flex flex-col bg-violet-800 p-4 max-w-96">
-                        <h3 class="text-xl sm:text-2xl my-4">AI Judge</h3>
-                        <p class="text-base text-wrap">An AI integrated Application which gives verdict for judgemental arguments and glossary for Legal phrases</p>
-                        <ul class="flex flex-wrap gap-2 my-4">
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Nodejs</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Express</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">HTML</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">CSS</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">OpenAI</li>
-                        </ul>
-                        <ul class="flex flex-col gap-2 list-disc list-inside">
-                            <li>Open AI integrated</li>
-                            <li>Verdict for Real world Scenario</li>
-                            <li>glossary for legal phrases</li>
-                        </ul>
-                        <div class="flex flex-row gap-2 my-4">
-                            <div class="rounded-full bg-gray-500 p-2 text-base text-center"><a href="">Github</a></div>
-                            <div class="rounded-full border-2 border-gray-500 p-2 text-base text-center"><a href="">Live Demo</a></div>
-                        </div>
-                    </div>
-
-                    <!-- project finance tracker -->
-                    <div class="flex flex-col bg-violet-800 p-4 max-w-96">
-                        <h3 class="text-xl sm:text-2xl my-4">Finance Tracker</h3>
-                        <p class="text-base text-wrap">A web app for tracking personal expenses and income with categorized dashboard and recent transactions history</p>
-                        <ul class="flex flex-wrap gap-2 my-4">
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Javascript</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">HTML</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">CSS</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">MySQL</li>
-                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">PHP</li>
-                        </ul>
-                        <ul class="flex flex-col gap-2 list-disc list-inside">
-                            <li>Track Expenses and Income</li>
-                            <li>Categorize the transactions</li>
-                            <li>Secure Authentication</li>
-                            <li>User friendly UI</li>
-                        </ul>
-                        <div class="flex flex-row gap-2 my-4">
-                            <div class="rounded-full bg-gray-500 p-2 text-base text-center"><a href="">Github</a></div>
-                            <div class="rounded-full border-2 border-gray-500 p-2 text-base text-center"><a href="">Live Demo</a></div>
-                        </div>
+                    <div class="md:w-1/2 pt-2 md:pt-0">
+                        <h3 class="text-xl font-bold text-accent-blue">Gowtham Model School</h3>
+                        <p class="text-lg font-medium">SSC</p>
+                        <p class="text-sm font-light text-text-light/70">CGPA: 10</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- contact section -->
-        <div class="flex flex-col justify-center items-center gap-4 bg-violet-300 h-auto w-full p-8">
-            <div class="flex flex-col sm:flex-row gap-4 flex-wrap justify-center items-start bg-violet-600 w-full p-4">
-                <div class="flex flex-col gap-4 min-w-0 w-full sm:w-1/2">
-                    <h2 class="text-2xl sm:text-4xl">Contact Me</h2>
-                    <p>feel free to reach out for any inquiries or feedback.</p>
+        <hr class="border-t border-dark-secondary my-8">
+        <section id="projects" class="py-16 scroll-reveal">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-text-light">
+                Featured <span class="text-accent-blue">Projects</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="flex flex-col bg-dark-secondary p-6 rounded-xl shadow-2xl transition-transform duration-300 hover:scale-[1.03] hover:shadow-accent-blue/30 border-t-4 border-accent-blue">
+                    <h3 class="text-2xl font-bold my-3">TaskVault</h3>
+                    <p class="text-base text-text-light/70 mb-4 flex-grow">A backend project which implements **RBAC** (Role based access control) on task management between users and admins.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-text-light/80 text-sm font-semibold">Tech Stack:</span>
+                        <i class="fab fa-node-js text-green-500 text-xl" title="Node.js"></i>
+                        <i class="fas fa-server text-gray-400 text-xl" title="Express.js"></i>
+                        <i class="fas fa-database text-blue-500 text-xl" title="MongoDB"></i>
+                        <span class="h-auto rounded-full bg-accent-blue/20 text-accent-blue text-xs px-3 py-1 font-medium">JWT</span>
+                    </div>
+
+                    <ul class="space-y-2 text-sm text-text-light/90 list-disc list-inside mb-6">
+                        <li>Secure Authentication System</li>
+                        <li>Password Hashing with bcrypt</li>
+                        <li>Role-Based Access Control (RBAC)</li>
+                    </ul>
+
+                    <div class="flex flex-row gap-3 mt-auto">
+                        <a href="#" class="flex-1 py-2 bg-accent-blue text-dark-primary text-sm font-semibold rounded-full text-center hover:bg-accent-hover transition-colors">
+                            <i class="fab fa-github mr-1"></i> Github
+                        </a>
+                        <a href="#" class="flex-1 py-2 border-2 border-accent-blue text-accent-blue text-sm font-semibold rounded-full text-center hover:bg-accent-blue/10 transition-colors">
+                            <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex flex-col bg-dark-secondary p-6 rounded-xl shadow-2xl transition-transform duration-300 hover:scale-[1.03] hover:shadow-accent-blue/30 border-t-4 border-cyan-400">
+                    <h3 class="text-2xl font-bold my-3">SlotSwapper</h3>
+                    <p class="text-base text-text-light/70 mb-4 flex-grow">A backend system for managing user event slots and enabling slot swapping functionality between users.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-text-light/80 text-sm font-semibold">Tech Stack:</span>
+                        <i class="fab fa-node-js text-green-500 text-xl" title="Node.js"></i>
+                        <i class="fas fa-server text-gray-400 text-xl" title="Express.js"></i>
+                        <i class="fas fa-database text-blue-500 text-xl" title="MongoDB"></i>
+                        <span class="h-auto rounded-full bg-cyan-400/20 text-cyan-400 text-xs px-3 py-1 font-medium">JWT</span>
+                    </div>
+
+                    <ul class="space-y-2 text-sm text-text-light/90 list-disc list-inside mb-6">
+                        <li>Secure Authentication System</li>
+                        <li>Password Hashing with bcrypt</li>
+                        <li>Slot Entity CRUD operations with Swap Feature</li>
+                    </ul>
+
+                    <div class="flex flex-row gap-3 mt-auto">
+                        <a href="#" class="flex-1 py-2 bg-accent-blue text-dark-primary text-sm font-semibold rounded-full text-center hover:bg-accent-hover transition-colors">
+                            <i class="fab fa-github mr-1"></i> Github
+                        </a>
+                        <a href="#" class="flex-1 py-2 border-2 border-accent-blue text-accent-blue text-sm font-semibold rounded-full text-center hover:bg-accent-blue/10 transition-colors">
+                            <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="flex flex-col bg-dark-secondary p-6 rounded-xl shadow-2xl transition-transform duration-300 hover:scale-[1.03] hover:shadow-accent-blue/30 border-t-4 border-yellow-500">
+                    <h3 class="text-2xl font-bold my-3">Blog App</h3>
+                    <p class="text-base text-text-light/70 mb-4 flex-grow">An application to keep track of your personal blogs with an integrated rich text editor.</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="text-text-light/80 text-sm font-semibold">Tech Stack:</span>
+                        <i class="fab fa-node-js text-green-500 text-xl" title="Node.js"></i>
+                        <i class="fas fa-server text-gray-400 text-xl" title="Express.js"></i>
+                        <i class="fab fa-css3-alt text-blue-600 text-xl" title="CSS"></i>
+                        <span class="h-auto rounded-full bg-yellow-500/20 text-yellow-500 text-xs px-3 py-1 font-medium">EJS</span>
+                    </div>
+
+                    <ul class="space-y-2 text-sm text-text-light/90 list-disc list-inside mb-6">
+                        <li>Blog CRUD operations</li>
+                        <li>Integrated Rich Text editor</li>
+                        <li>Clean and functional UI</li>
+                    </ul>
+
+                    <div class="flex flex-row gap-3 mt-auto">
+                        <a href="#" class="flex-1 py-2 bg-accent-blue text-dark-primary text-sm font-semibold rounded-full text-center hover:bg-accent-hover transition-colors">
+                            <i class="fab fa-github mr-1"></i> Github
+                        </a>
+                        <a href="#" class="flex-1 py-2 border-2 border-accent-blue text-accent-blue text-sm font-semibold rounded-full text-center hover:bg-accent-blue/10 transition-colors">
+                            <i class="fas fa-external-link-alt mr-1"></i> Live Demo
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <hr class="border-t border-dark-secondary my-8">
+        <section id="contact" class="py-16 scroll-reveal">
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-center mb-12 text-text-light">
+                Get In <span class="text-accent-blue">Touch</span>
+            </h2>
+            
+            <div class="flex flex-col lg:flex-row gap-10 justify-center items-start lg:items-stretch bg-dark-secondary p-8 rounded-xl shadow-2xl">
+                
+                <div class="flex flex-col gap-6 min-w-0 w-full lg:w-1/2">
+                    <p class="text-lg text-text-light/80">I'm currently seeking new opportunities. Feel free to reach out for collaboration or just to say hello!</p>
+                    
                     <form action="" class="flex flex-col gap-4">
-                        <input type="text" name="name" id="name" class="w-full p-2 rounded-md">
-                        <input type="email" name="email" id="email" class="w-full p-2 rounded-md">
-                        <textarea name="message" id="message" class="w-full p-2 rounded-md"></textarea>
-                        <input type="submit" value="submit" class="bg-violet-800 w-full p-4 rounded-xl cursor-pointer">
+                        <input type="text" name="name" id="name" placeholder="Your Name" class="w-full p-3 rounded-lg bg-dark-primary text-text-light border border-dark-secondary focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors">
+                        <input type="email" name="email" id="email" placeholder="Your Email" class="w-full p-3 rounded-lg bg-dark-primary text-text-light border border-dark-secondary focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors">
+                        <textarea name="message" id="message" rows="5" placeholder="Your Message" class="w-full p-3 rounded-lg bg-dark-primary text-text-light border border-dark-secondary focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors"></textarea>
+                        <input type="submit" value="Send Message" class="bg-accent-blue text-dark-primary w-full p-4 rounded-lg cursor-pointer font-bold uppercase tracking-wider hover:bg-accent-hover transition-colors">
                     </form>
-                    <div class="flex flex-row gap-2 items-center flex-wrap">
-                        <a href="mailto:venkatasampath743@gmail.com">venkatasampath743@gmail.com</a>
-                        <div class="border-l border-black h-6"></div>
-                        <a href="" class="text-nowrap">+91 9110391198</a>
+                    
+                    <div class="flex flex-row gap-4 items-center flex-wrap text-lg font-medium pt-2">
+                        <i class="fas fa-envelope text-accent-blue"></i>
+                        <a href="mailto:venkatasampath743@gmail.com" class="hover:text-accent-blue transition-colors">venkatasampath743@gmail.com</a>
+                        <div class="h-6 w-px bg-dark-secondary"></div>
+                        <i class="fas fa-phone-alt text-accent-blue"></i>
+                        <a href="tel:+919110391198" class="text-nowrap hover:text-accent-blue transition-colors">+91 9110391198</a>
                     </div>
-                    <div class="flex flex-row gap-4 justify-center items-center my-4 flex-wrap">
-                        <a href=""><i class="text-4xl fa-brands fa-linkedin"></i></a>
-                        <a href=""><i class="text-4xl fa-brands fa-github"></i></a>
-                        <a href=""><i class="text-4xl fa-brands fa-instagram"></i></a>
+                    
+                    <div class="flex flex-row gap-6 justify-start items-center my-4">
+                        <a href="" target="_blank" aria-label="LinkedIn"><i class="text-3xl fa-brands fa-linkedin hover:text-accent-blue transition-colors"></i></a>
+                        <a href="" target="_blank" aria-label="GitHub"><i class="text-3xl fa-brands fa-github hover:text-accent-blue transition-colors"></i></a>
+                        <a href="" target="_blank" aria-label="Instagram"><i class="text-3xl fa-brands fa-instagram hover:text-accent-blue transition-colors"></i></a>
                     </div>
                 </div>
-                <div class="w-full sm:w-1/2 h-64 sm:h-96">
-                    <iframe class="w-full h-full border-0 rounded-3xl" src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3806.771301941397!2d78.5115103741247!3d17.422759601787195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTfCsDI1JzIxLjkiTiA3OMKwMzAnNTAuNyJF!5e0!3m2!1sen!2sin!4v1764508841070!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                
+                <div class="w-full lg:w-1/2">
+                    <div class="map-responsive-container rounded-xl shadow-2xl overflow-hidden">
+                        <iframe 
+                            class="w-full h-full absolute top-0 left-0 border-0" 
+                            src="https://maps.google.com/maps?q=Hyderabad,%20Telangana&t=&z=13&ie=UTF8&iwloc=&output=embed" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <footer class="text-center py-6 text-sm text-text-light/50 border-t border-dark-secondary mt-10">
+            © 2025 Venkata Sampath.
+        </footer>
         
-    </div>   
+    </div>
+    <button id="back-to-top" class="fixed bottom-6 right-6 p-3 bg-accent-blue text-dark-primary rounded-full shadow-lg opacity-0 transition-opacity duration-300 hover:bg-accent-hover focus:outline-none focus:ring-4 focus:ring-accent-blue/50 z-50">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </button>
+
+    <script>
+        // DEFINITIVE JS LOGIC FOR MOBILE MENU TOGGLE
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('hamburger-icon');
+
+        function toggleMobileMenu() {
+            // Toggles 'hidden' state. When 'hidden' is removed, the menu is shown (due to default classes).
+            mobileMenu.classList.toggle('hidden');
+
+            // Toggle the icon (Hamburger <-> Close)
+            if (mobileMenu.classList.contains('hidden')) {
+                // Menu is hidden (closed): Show hamburger icon
+                menuIcon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            } else {
+                // Menu is visible (open): Show close/X icon
+                menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            }
+        }
+
+        document.getElementById('menu-toggle').addEventListener('click', toggleMobileMenu);
+
+        // Close mobile menu on link click
+        document.querySelectorAll('#mobile-menu a').forEach(item => {
+            item.addEventListener('click', () => {
+                // Only call toggleMobileMenu if the menu is currently open (not hidden)
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+
+
+        // SCROLL REVEAL (Intersection Observer)
+        const scrollRevealElements = document.querySelectorAll('.scroll-reveal');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        scrollRevealElements.forEach(el => {
+            observer.observe(el);
+        })
+
+        // BACK TO TOP BUTTON LOGIC
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.remove('opacity-0');
+            } else {
+                backToTopButton.classList.add('opacity-0');
+            }
+        });
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // NAVBAR SCROLL BEHAVIOR
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 0) {
+                navbar.classList.add('border-b-dark-secondary');
+            } else {
+                navbar.classList.remove('border-b-dark-secondary');
+            }
+        });
+    </script>
 </body>
 </html>
