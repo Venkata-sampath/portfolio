@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/de81ed7250.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body class="bg-black flex justify-center">
@@ -17,8 +18,8 @@
                 <h1 class="text-3xl sm:text-6xl my-4">Venkata Sampath Guthina</h1>
                 <p class="text-lg my-8">Web Developer</p>
                 <div class="flex flex-row gap-4 justify-center">
-                    <div class="bg-violet-950 text-center rounded-full p-3"><a href="#">Download Resume</a></div>
-                    <div class="border-2 border-violet-950 text-center rounded-full p-3"><a href="#">Contact</a></div>
+                    <div class="bg-violet-800 text-center rounded-full p-3"><a href="#">Download Resume</a></div>
+                    <div class="border-2 border-violet-800 text-center rounded-full p-3"><a href="#">Contact</a></div>
                 </div>
             </div>
         </header>
@@ -115,6 +116,149 @@
             </div>
         </div>
 
+        <!-- projects section -->
+        <div class="flex flex-col justify-center items-center gap-4 bg-violet-300 h-auto w-full p-8">
+            <div class="flex flex-col justify-center items-center bg-violet-600 h-auto w-full">
+                <h2 class="text-2xl sm:text-4xl my-4">Projects</h2>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <!-- project taskvault -->
+                    <div class="flex flex-col bg-violet-800 p-4 max-w-96">
+                        <h3 class="text-xl sm:text-2xl my-4">TaskVault</h3>
+                        <p class="text-base text-wrap">A backend project which implements RBAC(Role based access control) on task managed between users and admins</p>
+                        <ul class="flex flex-wrap gap-2 my-4">
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Nodejs</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Express</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">MongoDB</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">JWT</li>
+                        </ul>
+                        <ul class="flex flex-col gap-2 list-disc list-inside">
+                            <li>Secure Authentication System</li>
+                            <li>Password Hashing with bcrypt</li>
+                            <li>Role-Based Access Control(RBAC)</li>
+                        </ul>
+                        <div class="flex flex-row gap-2 my-4">
+                            <div class="rounded-full bg-gray-500 p-2 text-base text-center"><a href="">Github Repo</a></div>
+                            <div class="rounded-full border-2 border-gray-500 p-2 text-base text-center"><a href="">Live Demo</a></div>
+                        </div>
+                    </div>
+
+                    <!-- project slotswapper -->
+                    <div class="flex flex-col bg-violet-800 p-4 max-w-96">
+                        <h3 class="text-xl sm:text-2xl my-4">SlotSwapper</h3>
+                        <p class="text-base text-wrap">SlotSwapper is a backend system for managing user event slots and enabling slot swapping between users</p>
+                        <ul class="flex flex-wrap gap-2 my-4">
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Nodejs</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Express</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">MongoDB</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">JWT</li>
+                        </ul>
+                        <ul class="flex flex-col gap-2 list-disc list-inside">
+                            <li>Secure Authentication System</li>
+                            <li>Password Hashing with bcrypt</li>
+                            <li>Slot Entity CRUD operations with Swap Feature</li>
+                        </ul>
+                        <div class="flex flex-row gap-2 my-4">
+                            <div class="rounded-full bg-gray-500 p-2 text-base text-center"><a href="">Github</a></div>
+                            <div class="rounded-full border-2 border-gray-500 p-2 text-base text-center"><a href="">Live Demo</a></div>
+                        </div>
+                    </div>
+
+                    <!-- project blog app -->
+                    <div class="flex flex-col bg-violet-800 p-4 max-w-96">
+                        <h3 class="text-xl sm:text-2xl my-4">Blog App</h3>
+                        <p class="text-base text-wrap">An Application to keep track of your personal blogs</p>
+                        <ul class="flex flex-wrap gap-2 my-4">
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Nodejs</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Express</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">CSS</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">EJS</li>
+                        </ul>
+                        <ul class="flex flex-col gap-2 list-disc list-inside">
+                            <li>Blog CRUD operations</li>
+                            <li>Integraed Rich Text editor</li>
+                        </ul>
+                        <div class="flex flex-row gap-2 my-4">
+                            <div class="rounded-full bg-gray-500 p-2 text-base text-center"><a href="">Github</a></div>
+                            <div class="rounded-full border-2 border-gray-500 p-2 text-base text-center"><a href="">Live Demo</a></div>
+                        </div>
+                    </div>
+
+                    <!-- project ai judge -->
+                    <div class="flex flex-col bg-violet-800 p-4 max-w-96">
+                        <h3 class="text-xl sm:text-2xl my-4">AI Judge</h3>
+                        <p class="text-base text-wrap">An AI integrated Application which gives verdict for judgemental arguments and glossary for Legal phrases</p>
+                        <ul class="flex flex-wrap gap-2 my-4">
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Nodejs</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Express</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">HTML</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">CSS</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">OpenAI</li>
+                        </ul>
+                        <ul class="flex flex-col gap-2 list-disc list-inside">
+                            <li>Open AI integrated</li>
+                            <li>Verdict for Real world Scenario</li>
+                            <li>glossary for legal phrases</li>
+                        </ul>
+                        <div class="flex flex-row gap-2 my-4">
+                            <div class="rounded-full bg-gray-500 p-2 text-base text-center"><a href="">Github</a></div>
+                            <div class="rounded-full border-2 border-gray-500 p-2 text-base text-center"><a href="">Live Demo</a></div>
+                        </div>
+                    </div>
+
+                    <!-- project finance tracker -->
+                    <div class="flex flex-col bg-violet-800 p-4 max-w-96">
+                        <h3 class="text-xl sm:text-2xl my-4">Finance Tracker</h3>
+                        <p class="text-base text-wrap">A web app for tracking personal expenses and income with categorized dashboard and recent transactions history</p>
+                        <ul class="flex flex-wrap gap-2 my-4">
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">Javascript</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">HTML</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">CSS</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">MySQL</li>
+                            <li class="h-auto rounded-full bg-gray-500 p-2 text-base">PHP</li>
+                        </ul>
+                        <ul class="flex flex-col gap-2 list-disc list-inside">
+                            <li>Track Expenses and Income</li>
+                            <li>Categorize the transactions</li>
+                            <li>Secure Authentication</li>
+                            <li>User friendly UI</li>
+                        </ul>
+                        <div class="flex flex-row gap-2 my-4">
+                            <div class="rounded-full bg-gray-500 p-2 text-base text-center"><a href="">Github</a></div>
+                            <div class="rounded-full border-2 border-gray-500 p-2 text-base text-center"><a href="">Live Demo</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- contact section -->
+        <div class="flex flex-col justify-center items-center gap-4 bg-violet-300 h-auto w-full p-8">
+            <div class="flex flex-col sm:flex-row gap-4 flex-wrap justify-center items-start bg-violet-600 w-full p-4">
+                <div class="flex flex-col gap-4 min-w-0 w-full sm:w-1/2">
+                    <h2 class="text-2xl sm:text-4xl">Contact Me</h2>
+                    <p>feel free to reach out for any inquiries or feedback.</p>
+                    <form action="" class="flex flex-col gap-4">
+                        <input type="text" name="name" id="name" class="w-full p-2 rounded-md">
+                        <input type="email" name="email" id="email" class="w-full p-2 rounded-md">
+                        <textarea name="message" id="message" class="w-full p-2 rounded-md"></textarea>
+                        <input type="submit" value="submit" class="bg-violet-800 w-full p-4 rounded-xl cursor-pointer">
+                    </form>
+                    <div class="flex flex-row gap-2 items-center flex-wrap">
+                        <a href="mailto:venkatasampath743@gmail.com">venkatasampath743@gmail.com</a>
+                        <div class="border-l border-black h-6"></div>
+                        <a href="" class="text-nowrap">+91 9110391198</a>
+                    </div>
+                    <div class="flex flex-row gap-4 justify-center items-center my-4 flex-wrap">
+                        <a href=""><i class="text-4xl fa-brands fa-linkedin"></i></a>
+                        <a href=""><i class="text-4xl fa-brands fa-github"></i></a>
+                        <a href=""><i class="text-4xl fa-brands fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="w-full sm:w-1/2 h-64 sm:h-96">
+                    <iframe class="w-full h-full border-0 rounded-3xl" src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3806.771301941397!2d78.5115103741247!3d17.422759601787195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTfCsDI1JzIxLjkiTiA3OMKwMzAnNTAuNyJF!5e0!3m2!1sen!2sin!4v1764508841070!5m2!1sen!2sin" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
         
     </div>   
 </body>
