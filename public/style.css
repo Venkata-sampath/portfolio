@@ -587,10 +587,6 @@ video {
   bottom: 1.5rem;
 }
 
-.left-0 {
-  left: 0px;
-}
-
 .left-3 {
   left: 0.75rem;
 }
@@ -986,10 +982,6 @@ video {
   border-width: 1px;
 }
 
-.border-0 {
-  border-width: 0px;
-}
-
 .border-2 {
   border-width: 2px;
 }
@@ -1363,14 +1355,6 @@ video {
 }
 
 @media (min-width: 640px) {
-  .sm\:w-1\/2 {
-    width: 50%;
-  }
-
-  .sm\:flex-1 {
-    flex: 1 1 0%;
-  }
-
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -1544,10 +1528,6 @@ video {
 
   .lg\:flex-row {
     flex-direction: row;
-  }
-
-  .lg\:items-stretch {
-    align-items: stretch;
   }
 
   .lg\:space-y-8 > :not([hidden]) ~ :not([hidden]) {
