@@ -462,11 +462,12 @@
                 <div class="flex flex-col gap-6 min-w-0 w-full lg:w-1/2">
                     <p class="text-lg text-text-light/80">I'm currently seeking new opportunities. Feel free to reach out for collaboration or just to say hello!</p>
                     
-                    <form action="" class="flex flex-col gap-4">
-                        <input type="text" name="name" id="name" placeholder="Your Name" class="w-full p-3 rounded-lg bg-dark-primary text-text-light border border-dark-secondary focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors">
-                        <input type="email" name="email" id="email" placeholder="Your Email" class="w-full p-3 rounded-lg bg-dark-primary text-text-light border border-dark-secondary focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors">
-                        <textarea name="message" id="message" rows="5" placeholder="Your Message" class="w-full p-3 rounded-lg bg-dark-primary text-text-light border border-dark-secondary focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors"></textarea>
-                        <input type="submit" value="Send Message" class="bg-accent-blue text-dark-primary w-full p-4 rounded-lg cursor-pointer font-bold uppercase tracking-wider hover:bg-accent-hover transition-colors">
+                    <form action="https://formspree.io/f/meoyljjr" method="POST" class="flex flex-col gap-4">
+                        <input required type="text" name="name" id="name" placeholder="Your Name" class="w-full p-3 rounded-lg bg-dark-primary text-text-light border border-dark-secondary focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors">
+                        <input required type="email" name="email" id="email" placeholder="Your Email" class="w-full p-3 rounded-lg bg-dark-primary text-text-light border border-dark-secondary focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors">
+                        <textarea required name="message" id="message" rows="5" placeholder="Your Message" class="w-full p-3 rounded-lg bg-dark-primary text-text-light border border-dark-secondary focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors"></textarea>
+                        <input type="submit" class="bg-accent-blue text-dark-primary w-full p-4 rounded-lg cursor-pointer font-bold uppercase tracking-wider hover:bg-accent-hover transition-colors">
+                        <input type="hidden" name="_subject" value="New message from your portfolio">
                     </form>
                     
                     <div class="flex flex-row gap-4 items-center flex-wrap text-lg font-medium pt-2">
